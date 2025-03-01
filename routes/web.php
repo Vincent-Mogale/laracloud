@@ -2,10 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Models\Service;
+use App\Models\Category;
+use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $services = Category::get()->toArray();
+    return view('welcome', ['services' => $services]);
 })->name('home');
+
+Route::get('/get-services', [PostController::class, 'index']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
